@@ -48,7 +48,7 @@ def suggest_app():
         return jsonify(error='Completa nombre, categoría y descripción dentro del límite.'), 400
     if not re.fullmatch(r'https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/?', repo_url):
         return jsonify(error='El repositorio debe ser una URL HTTPS de github.com/propietario/repositorio.'), 400
-    if not isinstance(tags, list) or len(tags) > 8 or any(not isinstance(t,str) or len(t)>24 for t in tags):
+    if not isinstance(tags, list) or len(tags) > 8 or any(not isinstance(t, str) or len(t) > 24 for t in tags):
         return jsonify(error='Etiquetas inválidas.'), 400
     with connect() as con:
         con.execute('INSERT INTO apps(name,category,description,repo_url,tags,status) VALUES(?,?,?,?,?,?)',
@@ -57,4 +57,4 @@ def suggest_app():
 
 if __name__ == '__main__':
     # Local development only; deploy behind a production WSGI server.
-    app.run(host='127.0.0.1', port=8000, debug=False)
+    app.run(host='127.0.0.1', port=8001, debug=False)
